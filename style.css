@@ -1,0 +1,17 @@
+/* Responsive full window and centered canvas */
+body, html {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background: #000000;
+}
+
+canvas {
+  display: block;
+  max-width: 100%;
+  height: auto; /* maintain aspect ratio */
+  background: transparent; /* makes canvas itself transparent */
+}
