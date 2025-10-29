@@ -81,6 +81,12 @@ let instructionPhase = true;
 let instructionStartTime = 0;
 let countdownActive = false;
 
+let puddles = [];
+let puddleCount = 4; // how many puddles to spawn
+let puddleW = 80;
+let puddleH = 80;
+let puddleSlowdown = 0.6; // how much slower the player gets
+
 function preload() {
   menuBackground = loadImage("Images/cafeteria.png");
   gameBackground = loadImage("Images/gameBackground.png");
@@ -358,6 +364,7 @@ function mouseClicked() {
     score = 0
     gameStatus = "start";
     boxes.splice(0, boxes.length);
+    puddles.splice(0, puddles.length)
     playerFrozen = false;
   }
   //Loop the song
