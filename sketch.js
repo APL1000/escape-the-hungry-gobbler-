@@ -87,6 +87,9 @@ let puddleW = 80;
 let puddleH = 80;
 let puddleSlowdown = 0.6; // how much slower the player gets
 
+let touchTargetX = null;
+let touchTargetY = null;
+
 function preload() {
   menuBackground = loadImage("Images/cafeteria.png");
   gameBackground = loadImage("Images/gameBackground.png");
@@ -260,6 +263,25 @@ function movePlayer() {
 
     let dx = playerX;
     let dy = playerY;
+
+        // --- Touch movement (mobile) ---
+if (touchTargetX !== null && touchTargetY !== null) {
+  let mx = touchTargetX - playerX;
+  let my = touchTargetY - playerY;
+  let distance = sqrt(mx * mx + my * my);
+
+  if (distance > playerSpeed) {
+    playerX += (mx / distance) * playerSpeed;
+    playerY += (my / distance) * playerSpeed;
+  } else {
+    // Reached destination
+    playerX = touchTargetX;
+    playerY = touchTargetY;
+    touchTargetX = null;
+    touchTargetY = null;
+  }
+}
+
     // --- Player movement ---
     if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) playerX -= playerSpeed;
     if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) playerX += playerSpeed;
@@ -394,6 +416,22 @@ if(currentScreen == 'select'){
     locationSelect.elt.focus();
   }
   }
+   if(currentScreen == 'play') {
+  touchTargetX = mouseX;
+  touchTargetY = mouseY; 
+  if (gameOver == true) {
+    //Play again when clicked
+    resetCountdown()
+    setupTrue = true;
+    gameOver = false;
+    start = true;
+    score = 0
+    gameStatus = "start";
+    boxes.splice(0, boxes.length);
+    puddles.splice(0, puddles.length)
+    playerFrozen = false;
+  }
+}
 }
 
 //Save initials and location
