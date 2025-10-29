@@ -53,3 +53,32 @@ function spawnTripTile() {
   tripTile.speedX = random([-2, -1, 1, 2]);
   tripTile.speedY = random([-2, -1, 1, 2]);
 }
+
+function spawnPuddles() {
+  // Spawn puddles once if not already
+  if (puddles.length === 0) {
+    for (let i = 0; i < puddleCount; i++) {
+      puddles.push({
+        x: random(50, width - 50),
+        y: random(50, height - 50),
+      });
+    }
+  }
+}
+
+function slimePuddles(playerX, playerY) {
+  // Draw and check collisions
+  let slowed = false;
+  for (let puddle of puddles) {
+    noStroke();
+    fill(100, 220, 100, 180); // slimy green
+    image(slimeImg, puddle.x, puddle.y, puddleW, puddleH);
+    // Collision detection (simple box style)
+    if (collides(playerX, playerY, playerSize, puddle.x, puddle.y, puddleW)) {
+      slowed = true;
+    }
+  }
+
+  // Return whether the player is slowed (so you can apply it easily)
+  return slowed;
+}
