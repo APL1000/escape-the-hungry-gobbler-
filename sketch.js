@@ -57,7 +57,8 @@ let menuBackground,
   playerDown,
   toiletImg,
   foodMonsterImg,
-  powerupImg;
+  powerupImg,
+  slimeImg;
 
 //Rest
 let score = 0;
@@ -101,6 +102,7 @@ function preload() {
   immuneShield = loadImage("Images/immuneShield.png");
   toiletImg = loadImage("Images/toilet.png");
   powerupImg = loadImage("Images/powerup.png");
+  slimeImg = loadImage("Images/slime.png")
   backgroundSong = loadSound("Images/backgroundSong.mp3");
 }
 
