@@ -197,6 +197,7 @@ function playScreen() {
       selectEnemyPos();
       spawnTripTile();
       displayCountdown();
+      spawnPuddles()
 
       //Count down
       if (start == true) {
@@ -214,6 +215,12 @@ function playScreen() {
       collideTile();
       tripPlayer();
 
+      if (slimePuddles(playerX, playerY)) {
+  playerSpeed = 2; // slowed down
+} else {
+  playerSpeed = 5; // normal
+}
+      
       // Draw player
       fill(0, 150, 255);
       image(playerFrame, playerX, playerY, 50, 50);
