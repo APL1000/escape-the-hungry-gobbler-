@@ -133,9 +133,15 @@ function createPlayButton(button) {
 //Winner screen
 function winnerScreen() {
   textAlign(CENTER, CENTER);
+  fill(0, 0, 0, 200)
+  rect(50, 50, 600, 200)
+  
   textSize(72);
   fill("limegreen");
   text("YOU WIN", width / 2, height / 4);
+
+  textSize(24);
+  text("Double tap to play again!", width / 2, height / 2.5);
   
   gameOver = true;
   drawGui();
@@ -159,10 +165,14 @@ function winnerScreen() {
 
 //Loser screen
 function loserScreen() {
+  fill(236, 252, 3, 200)
+  rect(50, 50, 600, 200)
   fill("red");
   textSize(96);
   textAlign(CENTER, CENTER);
   text("Game Over!", width / 2, height / 4);
+  textSize(24);
+  text("Double tap to play again!", width / 2, height / 2.5);
   
   gameOver = true;
   enemySpeed = 0;
@@ -205,7 +215,7 @@ function playScreen() {
         start = false;
       }
 
-      enemySpeed = 2;
+      enemySpeed = 2.5;
       playerSpeed = 5;
 
       gameStatus = "play";
