@@ -12,7 +12,7 @@ let immuneTimer = 0;
 //Enemy Variables
 let enemyX, enemyY;
 let enemySize = 40;
-let enemySpeed = 1;
+let enemySpeed = 3.5;
 
 //Game status variables
 let setupTrue = true;
@@ -89,6 +89,11 @@ let puddleSlowdown = 0.6; // how much slower the player gets
 
 let touchTargetX = null;
 let touchTargetY = null;
+
+let lastClickTime = 0;
+let doubleClickDelay = 400;
+let lastTapTime = 0;
+let doubleTapDelay = 400; // max delay between taps (ms)
 
 function preload() {
   menuBackground = loadImage("Images/cafeteria.png");
@@ -282,11 +287,27 @@ if (touchTargetX !== null && touchTargetY !== null) {
   }
 }
 
-    // --- Player movement ---
-    if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) playerX -= playerSpeed;
-    if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) playerX += playerSpeed;
-    if (keyIsDown(UP_ARROW) || keyIsDown(87)) playerY -= playerSpeed;
-    if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) playerY += playerSpeed;
+    if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
+    playerX -= playerSpeed
+    touchTargetX = null;
+    touchTargetY = null;
+  }
+  if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) 
+    {
+    playerX += playerSpeed
+    touchTargetX = null;
+    touchTargetY = null;
+  }
+  if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
+    playerY -= playerSpeed
+    touchTargetX = null;
+    touchTargetY = null;
+  }
+  if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
+    playerY += playerSpeed
+    touchTargetX = null;
+    touchTargetY = null;
+  }
 
     // Keep player inside screen
     playerX = constrain(playerX, 0, width - playerSize);
@@ -377,62 +398,88 @@ function collides(x1, y1, s1, x2, y2, s2) {
 }
 
 function mouseClicked() {
-  if (gameOver == true) {
-    //Play again when clicked
-    resetCountdown()
-    setupTrue = true;
-    gameOver = false;
-    start = true;
-    score = 0
-    gameStatus = "start";
-    boxes.splice(0, boxes.length);
-    puddles.splice(0, puddles.length)
-    playerFrozen = false;
+  let currentTime = millis();
+
+  // --- Test double-click detection ---
+  if (currentTime - lastClickTime < doubleClickDelay) {
+    // --- Your play again logic ---
+    if (gameOver == true) {
+      resetCountdown();
+      setupTrue = true;
+      gameOver = false;
+      start = true;
+      score = 0;
+      gameStatus = "start";
+      boxes.splice(0, boxes.length);
+      puddles.splice(0, puddles.length);
+      playerFrozen = false;
+    }
   }
-  //Loop the song
-  if(songStart == false){
-    songStart = true
-    backgroundSong.loop()
+
+  lastClickTime = currentTime;
+
+  // --- Loop the song ---
+  if (songStart == false) {
+    songStart = true;
+    backgroundSong.loop();
   }
-  
-  if(currentScreen == 'select'){
+
+  // --- Handle select screen inputs ---
+  if (currentScreen == 'select') {
     if (initialsBox.isPressed) {
-    initialsInput.elt.focus(); // manually focus it
-  }
+      initialsInput.elt.focus();
+    }
 
-  if (locationBox.isPressed) {
-    locationSelect.elt.focus();
-  }
+    if (locationBox.isPressed) {
+      locationSelect.elt.focus();
+    }
   }
 }
 
-function touchStarted(){
-if(currentScreen == 'select'){
-    if (initialsBox.isPressed) {
-    initialsInput.elt.focus(); // manually focus it
+function touchStarted() {
+  let currentTime = millis();
+
+  // --- Double-tap detection ---
+  if (currentTime - lastTapTime < doubleTapDelay) {
+
+    // --- Play again logic ---
+    if (gameOver === true) {
+      resetCountdown();
+      setupTrue = true;
+      gameOver = false;
+      start = true;
+      score = 0;
+      gameStatus = "start";
+      boxes.splice(0, boxes.length);
+      puddles.splice(0, puddles.length);
+      playerFrozen = false;
+    }
   }
 
-  if (locationBox.isPressed) {
-    locationSelect.elt.focus();
+  lastTapTime = currentTime;
+
+  // --- Loop song ---
+  if (songStart === false) {
+    songStart = true;
+    backgroundSong.loop();
   }
+
+  // --- Select screen inputs ---
+  if (currentScreen === "select") {
+    if (initialsBox.isPressed) initialsInput.elt.focus();
+    if (locationBox.isPressed) locationSelect.elt.focus();
   }
-   if(currentScreen == 'play') {
-  touchTargetX = mouseX;
-  touchTargetY = mouseY; 
-  if (gameOver == true) {
-    //Play again when clicked
-    resetCountdown()
-    setupTrue = true;
-    gameOver = false;
-    start = true;
-    score = 0
-    gameStatus = "start";
-    boxes.splice(0, boxes.length);
-    puddles.splice(0, puddles.length)
-    playerFrozen = false;
+
+  // --- Movement control (touch) ---
+  if (currentScreen === "play") {
+    touchTargetX = mouseX;
+    touchTargetY = mouseY;
   }
+
+  return false;
+
 }
-}
+
 
 //Save initials and location
 function saveInput(initials, location) {
