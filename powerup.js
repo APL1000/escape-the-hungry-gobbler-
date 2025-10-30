@@ -1,7 +1,7 @@
 function spawnBoxes() {
   // --- Spawn random yellow boxes ---
   boxTimer++;
-  if (boxTimer % spawnInterval === 0 && boxes.length <= 2) {
+  if (boxTimer % spawnInterval === 0 && boxes.length <= 1) {
     boxes.push({
       x: random(width - boxSize),
       y: random(height - boxSize),
