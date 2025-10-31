@@ -471,11 +471,11 @@ function updateLeaderboard(initials, location, score) {
 }
 
 function generateDailyLeaderboard() {
-  // Get today's date in YYYY-MM-DD format
-  let today = new Date().toISOString().split("T")[0];
-
-  // Check if we already generated today's leaderboard
-  if (localStorage.getItem("leaderboardDate") === today) {
+  //Check today's date
+  const today = new Date().toISOString().split("T")[0];
+  const storedDate = localStorage.getItem("leaderboardDate");
+  
+  if (storedDate === today && localStorage.getItem("leaderboard")) {
     leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
     return;
   }
