@@ -215,7 +215,7 @@ function playScreen() {
         start = false;
       }
 
-      enemySpeed = 3.2;
+      enemySpeed = 3;
       playerSpeed = 5;
 
       gameStatus = "play";
