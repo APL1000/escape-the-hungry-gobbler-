@@ -394,7 +394,7 @@ function selectScreen() {
     stroke("black");
     strokeWeight(3);
     fill("yellow");
-    text(" Enter your initials \n and location", width / 2, height / 2 - 100);
+    text(" Enter your initials \n and location!", width / 2, height / 2 - 100);
 
     //Show the input boxes
     initialsInput.show();
