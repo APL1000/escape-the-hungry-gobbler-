@@ -476,8 +476,6 @@ function touchStarted() {
     touchTargetY = mouseY;
   }
 
-  return false;
-
 }
 
 
