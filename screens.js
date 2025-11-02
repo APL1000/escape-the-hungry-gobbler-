@@ -155,8 +155,8 @@ function winnerScreen() {
   }
   if (currentScreen == "play" && saveButton.isPressed) {
     updateLeaderboard(
-      localStorage.getItem("playerInitials"),
-      localStorage.getItem("playerLocation"),
+      localStorage.getItem("gobblerplayerInitials"),
+      localStorage.getItem("gobblerplayerLocation"),
       score
     );
     currentScreen = "leaderboard";
@@ -190,8 +190,8 @@ function loserScreen() {
   drawGui();
   if (currentScreen == "play" && saveButton.isPressed) {
     updateLeaderboard(
-      localStorage.getItem("playerInitials"),
-      localStorage.getItem("playerLocation"),
+      localStorage.getItem("gobblerplayerInitials"),
+      localStorage.getItem("gobblerplayerLocation"),
       score
     );
     currentScreen = "leaderboard";
@@ -372,8 +372,8 @@ function selectScreen() {
       positionInputs()
       
       // load only once
-      const savedInitials = localStorage.getItem("playerInitials");
-      const savedLocation = localStorage.getItem("playerLocation");
+      const savedInitials = localStorage.getItem("gobblerplayerInitials");
+      const savedLocation = localStorage.getItem("gobblerplayerLocation");
 
       if (savedInitials) initialsInput.value(savedInitials);
       if (savedLocation) locationSelect.value(savedLocation);
@@ -412,8 +412,8 @@ function selectScreen() {
     //Play game when pressed
     if (playButton2.isPressed) {
       if (initials.length >= 3 && location != "") {
-        localStorage.setItem("playerInitials", initials);
-        localStorage.setItem("playerLocation", location);
+        localStorage.setItem("gobblerplayerInitials", initials);
+        localStorage.setItem("gobblerplayerLocation", location);
 
         currentScreen = "play";
         strokeWeight(1);
@@ -441,7 +441,7 @@ let lastGeneratedDate = "";
 
 function updateLeaderboard(initials, location, score) {
   // Load the current leaderboard from localStorage
-  let storedLeaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
+  let storedLeaderboard = JSON.parse(localStorage.getItem("gobblerleaderboard")) || [];
   leaderboard = storedLeaderboard; // use existing leaderboard
 
   // Check if player already exists
@@ -467,16 +467,16 @@ function updateLeaderboard(initials, location, score) {
   }
 
   // Save updated leaderboard back to localStorage
-  localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+  localStorage.setItem("gobblerleaderboard", JSON.stringify(leaderboard));
 }
 
 function generateDailyLeaderboard() {
   //Check today's date
   const today = new Date().toISOString().split("T")[0];
-  const storedDate = localStorage.getItem("leaderboardDate");
+  const storedDate = localStorage.getItem("gobblerleaderboardDate");
   
-  if (storedDate === today && localStorage.getItem("leaderboard")) {
-    leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
+  if (storedDate === today && localStorage.getItem("gobblerleaderboard")) {
+    leaderboard = JSON.parse(localStorage.getItem("gobblerleaderboard"));
     return;
   }
 
@@ -508,8 +508,8 @@ function generateDailyLeaderboard() {
   leaderboard.sort((a, b) => b.score - a.score);
 
   // Save to localStorage with today's date
-  localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
-  localStorage.setItem("leaderboardDate", today);
+  localStorage.setItem("gobblerleaderboard", JSON.stringify(leaderboard));
+  localStorage.setItem("gobblerleaderboardDate", today);
 }
 
 function leaderboardScreen() {
