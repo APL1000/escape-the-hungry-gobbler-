@@ -479,6 +479,10 @@ function generateDailyLeaderboard() {
     leaderboard = JSON.parse(localStorage.getItem("gobblerleaderboard"));
     return;
   }
+  else{
+    localStorage.removeItem("gobblerleaderboard");
+    localStorage.removeItem("gobblerleaderboardDate");
+  }
 
   // Otherwise, make a new random leaderboard
   const sampleInitials = ["AM", "JS", "KT", "LM", "RB", "TD", "CG", "MP", "ZN", "QF"];
