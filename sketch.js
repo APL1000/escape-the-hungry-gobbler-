@@ -481,6 +481,6 @@ function touchStarted() {
 
 //Save initials and location
 function saveInput(initials, location) {
-  localStorage.setItem("playerInitials", initials);
-  localStorage.setItem("playerLocation", location);
+  localStorage.setItem("gobblerplayerInitials", initials);
+  localStorage.setItem("gobblerplayerLocation", location);
 }
