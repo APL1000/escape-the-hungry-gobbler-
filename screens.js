@@ -477,11 +477,44 @@ function generateDailyLeaderboard() {
   localStorage.removeItem("gobblerleaderboard");
   localStorage.removeItem("gobblerleaderboardDate");
   
+  if(localStorage.getItem("gobblerleaderboard") == null || localStorage.getItem("gobblerleaderboardDate") == null){
+    // Otherwise, make a new random leaderboard
+  const sampleInitials = ["AM", "JS", "KT", "LM", "RB", "TD", "CG", "MP", "ZN", "QF"];
+  const sampleLocations = [
+    "Canada",
+    "USA",
+    "Japan",
+    "UK",
+    "France",
+    "Germany",
+    "Italy",
+    "Brazil",
+    "India",
+    "Australia"
+  ];
+
+  leaderboard = [];
+  for (let i = 0; i < 10; i++) {
+    let initials = sampleInitials[Math.floor(Math.random() * sampleInitials.length)];
+    let location = sampleLocations[Math.floor(Math.random() * sampleLocations.length)];
+    let score = Math.floor(Math.random() * 80 + 5); // random score 100–1100
+
+    leaderboard.push({ initials, location, score });
+  }
+
+  // Sort leaderboard (highest score first)
+  leaderboard.sort((a, b) => b.score - a.score);
+
+  // Save to localStorage with today's date
+  localStorage.setItem("gobblerleaderboard", JSON.stringify(leaderboard));
+  localStorage.setItem("gobblerleaderboardDate", new Date().toISOString().split("T")[0]);
+  }
   
+  else{
   const today = new Date().toISOString().split("T")[0];
   const storedDate = localStorage.getItem("gobblerleaderboardDate");
   
-  if (storedDate === today) {
+  if (storedDate === today && localStorage.getItem("gobblerleaderboard")) {
     leaderboard = JSON.parse(localStorage.getItem("gobblerleaderboard"));
     return;
   }
@@ -520,6 +553,7 @@ function generateDailyLeaderboard() {
   // Save to localStorage with today's date
   localStorage.setItem("gobblerleaderboard", JSON.stringify(leaderboard));
   localStorage.setItem("gobblerleaderboardDate", today);
+  }
 }
 
 function leaderboardScreen() {
@@ -556,7 +590,7 @@ function leaderboardScreen() {
     fill("yellow")
     textAlign(CENTER);
     textSize(28);
-    text("🏆 Daily Leaderboard 🏆", width / 2, 40);
+    text("🏆 Daily Leaderboard! 🏆", width / 2, 40);
     textSize(22);
 
     fill("white")
