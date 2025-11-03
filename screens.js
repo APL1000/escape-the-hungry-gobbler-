@@ -469,7 +469,9 @@ function updateLeaderboard(initials, location, score) {
   // Save updated leaderboard back to localStorage
   localStorage.setItem("gobblerleaderboard", JSON.stringify(leaderboard));
 }
-
+localStorage.removeItem("leaderboard");
+  localStorage.removeItem("leaderboardDate");
+  generateDailyLeaderboard();
 function generateDailyLeaderboard() {
   //Check today's date
   const today = new Date().toISOString().split("T")[0];
