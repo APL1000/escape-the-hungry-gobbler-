@@ -472,6 +472,13 @@ function updateLeaderboard(initials, location, score) {
 
 function generateDailyLeaderboard() {
   //Check today's date
+
+  localStorage.removeItem("leaderboard");
+  localStorage.removeItem("leaderboardDate");
+  generateDailyLeaderboard();
+  
+  
+  
   const today = new Date().toISOString().split("T")[0];
   const storedDate = localStorage.getItem("gobblerleaderboardDate");
   
