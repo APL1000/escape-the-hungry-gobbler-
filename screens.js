@@ -442,7 +442,8 @@ let lastGeneratedDate = "";
 
 function updateLeaderboard(initials, location, score) {
   // Load the current leaderboard from localStorage
-  let storedLeaderboard = JSON.parse(localStorage.getItem("gobblerleaderboard")) || [];
+  let storedLeaderboard =
+    JSON.parse(localStorage.getItem("gobblerleaderboard")) || [];
   leaderboard = storedLeaderboard; // use existing leaderboard
 
   // Check if player already exists
@@ -472,59 +473,28 @@ function updateLeaderboard(initials, location, score) {
 }
 
 function generateDailyLeaderboard() {
-  //Check today's date
+  // Get today's date in YYYY-MM-DD format
+  let today = new Date().toISOString().split("T")[0];
 
-  localStorage.removeItem("gobblerleaderboard");
-  localStorage.removeItem("gobblerleaderboardDate");
-  
-  if(localStorage.getItem("gobblerleaderboard") == null || localStorage.getItem("gobblerleaderboardDate") == null){
-    // Otherwise, make a new random leaderboard
-  const sampleInitials = ["AM", "JS", "KT", "LM", "RB", "TD", "CG", "MP", "ZN", "QF"];
-  const sampleLocations = [
-    "Canada",
-    "USA",
-    "Japan",
-    "UK",
-    "France",
-    "Germany",
-    "Italy",
-    "Brazil",
-    "India",
-    "Australia"
-  ];
-
-  leaderboard = [];
-  for (let i = 0; i < 10; i++) {
-    let initials = sampleInitials[Math.floor(Math.random() * sampleInitials.length)];
-    let location = sampleLocations[Math.floor(Math.random() * sampleLocations.length)];
-    let score = Math.floor(Math.random() * 80 + 5); // random score 100–1100
-
-    leaderboard.push({ initials, location, score });
-  }
-
-  // Sort leaderboard (highest score first)
-  leaderboard.sort((a, b) => b.score - a.score);
-
-  // Save to localStorage with today's date
-  localStorage.setItem("gobblerleaderboard", JSON.stringify(leaderboard));
-  localStorage.setItem("gobblerleaderboardDate", new Date().toISOString().split("T")[0]);
-  }
-  
-  else{
-  const today = new Date().toISOString().split("T")[0];
-  const storedDate = localStorage.getItem("gobblerleaderboardDate");
-  
-  if (storedDate === today && localStorage.getItem("gobblerleaderboard")) {
+  // Check if we already generated today's leaderboard
+  if (localStorage.getItem("gobblerleaderboardDate") === today) {
     leaderboard = JSON.parse(localStorage.getItem("gobblerleaderboard"));
     return;
   }
-  else{
-    localStorage.removeItem("gobblerleaderboard");
-    localStorage.removeItem("gobblerleaderboardDate");
-  }
 
   // Otherwise, make a new random leaderboard
-  const sampleInitials = ["AM", "JS", "KT", "LM", "RB", "TD", "CG", "MP", "ZN", "QF"];
+  const sampleInitials = [
+    "AM",
+    "JS",
+    "KT",
+    "LM",
+    "RB",
+    "TD",
+    "CG",
+    "MP",
+    "ZN",
+    "QF",
+  ];
   const sampleLocations = [
     "Canada",
     "USA",
@@ -535,14 +505,16 @@ function generateDailyLeaderboard() {
     "Italy",
     "Brazil",
     "India",
-    "Australia"
+    "Australia",
   ];
 
   leaderboard = [];
   for (let i = 0; i < 10; i++) {
-    let initials = sampleInitials[Math.floor(Math.random() * sampleInitials.length)];
-    let location = sampleLocations[Math.floor(Math.random() * sampleLocations.length)];
-    let score = Math.floor(Math.random() * 80 + 5); // random score 100–1100
+    let initials =
+      sampleInitials[Math.floor(Math.random() * sampleInitials.length)];
+    let location =
+      sampleLocations[Math.floor(Math.random() * sampleLocations.length)];
+    let score = Math.floor(Math.random() * 54 + 5); // random score 100–1100
 
     leaderboard.push({ initials, location, score });
   }
@@ -553,17 +525,17 @@ function generateDailyLeaderboard() {
   // Save to localStorage with today's date
   localStorage.setItem("gobblerleaderboard", JSON.stringify(leaderboard));
   localStorage.setItem("gobblerleaderboardDate", today);
-  }
 }
 
 function leaderboardScreen() {
   if (currentScreen == "leaderboard") {
-    // Ensure leaderboard is ready
-
-    stroke('black')
-    strokeWeight(4)
-    fill("white");
     image(trophyRoom, 0, 0, width, height);
+    // Ensure leaderboard is ready
+    generateDailyLeaderboard();
+
+    stroke("black");
+    strokeWeight(4);
+    fill("white");
 
     initialsInput.hide();
     locationSelect.hide();
@@ -575,30 +547,30 @@ function leaderboardScreen() {
     playButton.visible = false;
     playButton2.visible = false;
 
-    push()
-    //Draw background squares
+    push();
+    // --- BACKGROUND SQUARES ---
     noStroke();
     fill(0, 0, 0, 180); // dark transparent squares
     let boxWidth = 320;
     let boxHeight = 400;
     rect(width / 2 - boxWidth - 50, 60, boxWidth - 50, boxHeight, 20); // left box
     rect(width / 2 + 110, 60, boxWidth - 50, boxHeight, 20); // right box
-    pop()
-    
+    pop();
+
     drawGui();
 
-    fill("yellow")
+    fill("yellow");
     textAlign(CENTER);
-    textSize(28);
-    text("🏆 Daily Leaderboard! 🏆", width / 2, 40);
+    textSize(20);
+    text("🏆 Daily Leaderboard 🏆", width / 2, 40);
     textSize(22);
 
-    fill("white")
+    fill("white");
     // Split into two columns
-    const leftX = width / 5;      // left column x position
+    const leftX = width / 5; // left column x position
     const rightX = (width / 5) * 4; // right column x position
-    const startY = 100;           // top margin
-    const lineSpacing = 75;       // vertical spacing
+    const startY = 100; // top margin
+    const lineSpacing = 60; // vertical spacing
 
     // Draw leaderboard
     for (let i = 0; i < leaderboard.length; i++) {
@@ -615,7 +587,9 @@ function leaderboardScreen() {
       }
 
       text(
-        `${i + 1}. ${entry.initials} - ${entry.location}\nScore: ${entry.score}`,
+        `${i + 1}. ${entry.initials} - ${entry.location}\nScore: ${
+          entry.score
+        }`,
         columnX,
         rowY
       );
