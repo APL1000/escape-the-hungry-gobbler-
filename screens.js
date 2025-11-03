@@ -481,7 +481,7 @@ function generateDailyLeaderboard() {
   const today = new Date().toISOString().split("T")[0];
   const storedDate = localStorage.getItem("gobblerleaderboardDate");
   
-  if (storedDate === today && localStorage.getItem("gobblerleaderboard")) {
+  if (storedDate === today) {
     leaderboard = JSON.parse(localStorage.getItem("gobblerleaderboard"));
     return;
   }
