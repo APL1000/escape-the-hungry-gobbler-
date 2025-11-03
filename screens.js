@@ -1,40 +1,47 @@
-// Button creation function
+//Create function to make buttons
 function createPlayButton(button) {
-  if (button === 0) {
-    if (!playButton) {
-      playButton = createButton("Play", width / 2 - 75, height / 2 - 60, 150, 75);
-      playButton.setStyle({
-        textSize: 30,
-        fillBg: color("orange"),
-        fillBgHover: color("yellow"),
-        fillLabel: color(0),
-        rounding: 12,
-        strokeBg: color(0),
-      });
-    }
-    playButton.visible = true;
-    playButton.enabled = true;
+  if (button == 0) {
+    // create a "Play" button
+    playButton = createButton("Play", width / 2 - 75, height / 2 - 60, 150, 75);
+    playButton.setStyle({
+      textSize: 30,
+      fillBg: color("orange"),
+      fillBgHover: color("yellow"),
+      fillLabel: color(0),
+      rounding: 12,
+      strokeBg: color(0),
+    });
   }
 
-  if (button === 1) {
-    if (!playButton2) {
-      playButton2 = createButton("Play", width / 2 - 60, height / 2 + 60, 150, 75);
-      playButton2.setStyle({
-        textSize: 30,
-        fillBg: color("orange"),
-        fillBgHover: color("yellow"),
-        fillLabel: color(0),
-        rounding: 12,
-        strokeBg: color(0),
-      });
-    }
-    playButton2.visible = true;
-    playButton2.enabled = true;
+  if (button == 1) {
+    playButton2 = createButton(
+      "Play",
+      width / 2 - 60,
+      height / 2 + 60,
+      150,
+      75
+    );
+    playButton2.setStyle({
+      textSize: 30,
+      fillBg: color("orange"),
+      fillBgHover: color("yellow"),
+      fillLabel: color(0),
+      rounding: 12,
+      strokeBg: color(0),
+    });
   }
-
-  if (button === 2) {
+  if (button == 2) {
+    backButton.visible = true;
+    backButton.enabled = true;
     if (!backButton) {
-      backButton = createButton("Back To Menu", width / 2 - 75, height / 2 + 40, 150, 50);
+      // create a "Play" button
+      backButton = createButton(
+        "Back To Menu",
+        width / 2 - 75,
+        height / 2 + 40,
+        150,
+        50
+      );
       backButton.setStyle({
         textSize: 30,
         fillBg: color("orange"),
@@ -44,100 +51,109 @@ function createPlayButton(button) {
         strokeBg: color(0),
       });
     }
-    backButton.visible = true;
-    backButton.enabled = true;
   }
-
-  if (button === 3) {
-    if (!leaderboardButton) {
-      leaderboardButton = createButton("Leaderboard", width / 2 - 50, height / 2 - 25, 100, 50);
-      leaderboardButton.setStyle({
-        fillBg: color("orange"),
-        fillBgHover: color("yellow"),
-        fillLabel: color(0),
-        rounding: 12,
-        strokeBg: color(0),
-      });
-    }
-    leaderboardButton.visible = true;
-    leaderboardButton.enabled = true;
+  if (button == 3) {
+    // create a "Play" button
+    leaderboardButton = createButton(
+      "Leaderboard",
+      width / 2 - 50,
+      height / 2 - 25,
+      100,
+      50
+    );
+    leaderboardButton.setStyle({
+      fillBg: color("orange"),
+      fillBgHover: color("yellow"),
+      fillLabel: color(0),
+      rounding: 12,
+      strokeBg: color(0),
+    });
   }
-
-  if (button === 4) {
-    if (!saveButton) {
-      saveButton = createButton("Save Score", width / 2 - 75, height / 2 + 100, 150, 50);
-      saveButton.setStyle({
-        textSize: 30,
-        fillBg: color("orange"),
-        fillBgHover: color("yellow"),
-        fillLabel: color(0),
-        rounding: 12,
-        strokeBg: color(0),
-      });
+  try {
+    if (button == 4) {
+      saveButton.visible = true;
+      saveButton.enabled = true;
+      if (!saveButton) {
+        // create a "Play" button
+        saveButton = createButton(
+          "Save Score",
+          width / 2 - 75,
+          height / 2 + 100,
+          150,
+          50
+        );
+         saveButton.setStyle({
+          textSize: 30,
+          fillBg: color("orange"),
+          fillBgHover: color("yellow"),
+          fillLabel: color(0),
+          rounding: 12,
+          strokeBg: color(0),
+        });
+      }
     }
-    saveButton.visible = true;
-    saveButton.enabled = true;
+  } catch (err) {
+    console.log(err);
   }
-
-  if (button === 5) {
-    if (!initialsBox) {
-      initialsBox = createButton("Play", width / 2 - 50, height / 2 - 60, 150, 75);
-      initialsBox.setStyle({
-        textSize: 30,
-        fillBg: color("orange"),
-        fillBgHover: color("yellow"),
-        fillLabel: color(0),
-        rounding: 12,
-        strokeBg: color(0),
-      });
-    }
+  if (button == 5) {
     initialsBox.visible = true;
-    initialsBox.enabled = true;
+      initialsBox.enabled = true;
+      if (!initialsBox) {
+    // create a "Play" button
+    initialsBox = createButton("Play", width / 2 - 50, height / 2 - 60, 150, 75);
+    initialsBox.setStyle({
+      textSize: 30,
+      fillBg: color("orange"),
+      fillBgHover: color("yellow"),
+      fillLabel: color(0),
+      rounding: 12,
+      strokeBg: color(0),
+    });
+      }
   }
-
-  if (button === 6) {
-    if (!locationBox) {
-      locationBox = createButton("Play", width / 2 - 50, height / 2 - 60, 150, 75);
-      locationBox.setStyle({
-        textSize: 30,
-        fillBg: color("orange"),
-        fillBgHover: color("yellow"),
-        fillLabel: color(0),
-        rounding: 12,
-        strokeBg: color(0),
-      });
-    }
+  
+  if (button == 6) {
     locationBox.visible = true;
-    locationBox.enabled = true;
+      locationBox.enabled = true;
+      if (!locationBox) {
+    // create a "Play" button
+    locationBox = createButton("Play", width / 2 - 50, height / 2 - 60, 150, 75);
+    locationBox.setStyle({
+      textSize: 30,
+      fillBg: color("orange"),
+      fillBgHover: color("yellow"),
+      fillLabel: color(0),
+      rounding: 12,
+      strokeBg: color(0),
+    });
+      }
   }
 }
 
-// Winner screen display and logic
+//Winner screen
 function winnerScreen() {
   textAlign(CENTER, CENTER);
-  fill(0, 0, 0, 200);
-  rect(50, 50, 600, 200);
-
+  fill(0, 0, 0, 200)
+  rect(50, 50, 600, 200)
+  
   textSize(72);
   fill("limegreen");
   text("YOU WIN", width / 2, height / 4);
 
   textSize(24);
   text("Double tap to play again!", width / 2, height / 2.5);
-
+  
   gameOver = true;
   drawGui();
-
-  // Back button returns to menu and resets buttons
-  if (currentScreen === "play" && backButton && backButton.isPressed) {
+  
+  //Check if buttons are pressed
+  if (currentScreen == "play" && backButton.isPressed) {
     backButton.visible = false;
     saveButton.visible = false;
     currentScreen = "menu";
     createPlayButton(0);
   }
-
-  // Save score button updates leaderboard and goes to leaderboard screen
-  if (currentScreen === "play" && saveButton && saveButton.isPressed) {
+  if (currentScreen == "play" && saveButton.isPressed) {
     updateLeaderboard(
       localStorage.getItem("gobblerplayerInitials"),
       localStorage.getItem("gobblerplayerLocation"),
@@ -147,22 +163,23 @@ function winnerScreen() {
   }
 }
 
-// Loser screen display and logic
+//Loser screen
 function loserScreen() {
-  fill(236, 252, 3, 200);
-  rect(50, 50, 600, 200);
+  fill(236, 252, 3, 200)
+  rect(50, 50, 600, 200)
   fill("red");
   textSize(96);
   textAlign(CENTER, CENTER);
   text("Game Over!", width / 2, height / 4);
   textSize(24);
   text("Double tap to play again!", width / 2, height / 2.5);
-
+  
   gameOver = true;
   enemySpeed = 0;
   playerSpeed = 0;
-
-  if (currentScreen === "play" && backButton && backButton.isPressed) {
+  
+  //Check if buttons are pressed
+  if (currentScreen == "play" && backButton.isPressed) {
     backButton.visible = false;
     backButton.enabled = false;
     saveButton.visible = false;
@@ -171,7 +188,7 @@ function loserScreen() {
     createPlayButton(0);
   }
   drawGui();
-  if (currentScreen === "play" && saveButton && saveButton.isPressed) {
+  if (currentScreen == "play" && saveButton.isPressed) {
     updateLeaderboard(
       localStorage.getItem("gobblerplayerInitials"),
       localStorage.getItem("gobblerplayerLocation"),
@@ -181,18 +198,19 @@ function loserScreen() {
   }
 }
 
-// Play screen primary game logic and render
 function playScreen() {
-  if (currentScreen === "play") {
+  if (currentScreen == "play") {
     image(gameBackground, 0, 0, width, height);
-
-    if (setupTrue === true) {
+    
+    //Setup game
+    if (setupTrue == true) {
       selectEnemyPos();
       spawnTripTile();
       displayCountdown();
-      spawnPuddles();
+      spawnPuddles()
 
-      if (start === true) {
+      //Count down
+      if (start == true) {
         startTime = millis();
         start = false;
       }
@@ -208,45 +226,63 @@ function playScreen() {
       tripPlayer();
 
       if (slimePuddles(playerX, playerY)) {
-        playerSpeed = 2; // slowed
-      } else {
-        playerSpeed = 5; // normal
-      }
-
+  playerSpeed = 2; // slowed down
+} else {
+  playerSpeed = 5; // normal
+}
+      
+      // Draw player
       fill(0, 150, 255);
       image(playerFrame, playerX, playerY, 50, 50);
 
+      // Draw enemy
       fill(255, 50, 50);
-      image(foodMonsterImg, enemyX - 30, enemyY - 30, enemySize + 60, enemySize + 60);
+      image(
+        foodMonsterImg,
+        enemyX - 30,
+        enemyY - 30,
+        enemySize + 60,
+        enemySize + 60
+      );
 
-      if (playerImmune === true) {
-        text(
-          ((immuneTimer - immuneTime / 100) / 100).toFixed(1),
-          playerX + 40,
-          playerY - 30
-        );
+      //Give immune shield
+      if (playerImmune == true) {
+        //Write immune text
+        text((immuneTimer - immuneTime / 100) / 100, playerX + 40, playerY - 30);
         image(immuneShield, playerX - 5, playerY - 5, 60, 60);
       }
 
+      // Move the tile
       tripTile.x += tripTile.speedX;
       tripTile.y += tripTile.speedY;
 
+      // Bounce off edges
       if (tripTile.x <= 0 || tripTile.x + tripTile.size >= width) {
         tripTile.speedX *= -1;
       }
       if (tripTile.y <= 0 || tripTile.y + tripTile.size >= height) {
         tripTile.speedY *= -1;
       }
-
+      //Draw obstacles
       fill("yellow");
-      image(toiletImg, tripTile.x - 10, tripTile.y - 10, tripTile.size + 20, tripTile.size + 20);
+      image(
+        toiletImg,
+        tripTile.x - 10,
+        tripTile.y - 10,
+        tripTile.size + 20,
+        tripTile.size + 20
+      );
 
-      if (gameStatus === "play") {
+      //Playing the game
+      if (gameStatus == "play") {
         timer();
+
         movePlayer();
+
         spawnBoxes();
         drawBoxes();
 
+        // --- Enemy movement (chase player) ---
         let dx = playerX - enemyX;
         let dy = playerY - enemyY;
         let distance = dist(enemyX, enemyY, playerX, playerY);
@@ -256,9 +292,10 @@ function playScreen() {
           enemyY += (dy / distance) * enemySpeed;
         }
 
+        // --- Detect collision ---
         if (
           collides(playerX, playerY, playerSize, enemyX, enemyY, enemySize) &&
-          playerImmune !== true
+          playerImmune != true
         ) {
           gameStatus = "lose";
           createPlayButton(2);
@@ -267,151 +304,130 @@ function playScreen() {
       }
     }
 
-    if (gameStatus === "win") {
+    //Check screens
+    if (gameStatus == "win") {
       winnerScreen();
     }
-    if (gameStatus === "lose") {
+    if (gameStatus == "lose") {
       loserScreen();
     }
-    if (playerImmune === true) {
+    if (playerImmune == true) {
       immuneDuration();
     }
   }
 }
 
-// Menu screen and buttons
+//Create menus with buttons
 function drawMenu() {
-  if (currentScreen === "menu") {
-    if (initialsInput) initialsInput.hide();
-    if (locationSelect) locationSelect.hide();
-
+  if (currentScreen == "menu") {
+    initialsInput.hide();
+    locationSelect.hide();
+    
+    //In case any errors happen
     try {
-      if (backButton) {
-        backButton.visible = false;
-        backButton.enabled = false;
-      }
-      if (saveButton) {
-        saveButton.visible = false;
-        saveButton.enabled = false;
-      }
+      backButton.visible = false;
+      saveButton.visible = false;
+    } catch (err) {}
+    try {
+      playButton2.visible = false;
     } catch {}
 
+    //In case any errors happen
     try {
-      if (playButton2) {
-        playButton2.visible = false;
-        playButton2.enabled = false;
-      }
-    } catch {}
-
-    try {
-      if (initialsBox) {
-        initialsBox.visible = false;
-        initialsBox.enabled = false;
-      }
-      if (locationBox) {
-        locationBox.visible = false;
-        locationBox.enabled = false;
-      }
-    } catch {}
-
+      initialsBox.visible = false;
+      initialsBox.enabled = false
+      locationBox.visible = false;
+      locationBox.enabled = false
+    } catch (err) {}
+    
+    //Style the menu
     image(menuBackground, 0, 0, width, height);
-
     stroke("black");
     strokeWeight(3);
     fill("yellow");
     textAlign(CENTER, CENTER);
     textSize(60);
-    text("Escape the Hungry \n Gobbler", width / 2, 120);
-
+    text("Escape the Hungry \n Gobbler", width / 2, 120)
     drawGui();
-
-    if (leaderboardButton) {
-      leaderboardButton.draw();
-      leaderboardButton.onPress = function () {
-        currentScreen = "leaderboard";
-        createPlayButton(2);
-      };
-    }
-
-    if (playButton) {
-      playButton.draw();
-    }
-
-    if (currentScreen === "menu" && playButton && playButton.isPressed) {
-      currentScreen = "select";
-      strokeWeight(1);
-      playButton.visible = false;
-      createPlayButton(1);
-    }
+    leaderboardButton.draw();
   }
+  
+  //Check if buttons are pressed
+  if (currentScreen === "menu" && playButton.isPressed) {
+    currentScreen = "select";
+    strokeWeight(1);
+    playButton.visible = false;
+    createPlayButton(1);
+  }
+  leaderboardButton.onPress = function () {
+    currentScreen = "leaderboard";
+    createPlayButton(2);
+  };
 }
 
-// Selection screen: user initials and location input
+//Create a screen where the player can enter data
 function selectScreen() {
-  if (currentScreen === "select") {
-    if (!dataLoaded) {
-      positionInputs();
-
+  if (currentScreen == "select") {
+    if (dataLoaded == false) {
+      positionInputs()
+      
+      // load only once
       const savedInitials = localStorage.getItem("gobblerplayerInitials");
       const savedLocation = localStorage.getItem("gobblerplayerLocation");
 
-      if (initialsInput && savedInitials) initialsInput.value(savedInitials);
-      if (locationSelect && savedLocation) locationSelect.value(savedLocation);
+      if (savedInitials) initialsInput.value(savedInitials);
+      if (savedLocation) locationSelect.value(savedLocation);
 
-      createPlayButton(5);
-      createPlayButton(6);
-
-      dataLoaded = true;
+      createPlayButton(5)
+      createPlayButton(6)
+      
+      dataLoaded = true; // mark as loaded
     }
 
-    const initials = initialsInput ? initialsInput.value().trim() : "";
-    const location = locationSelect ? locationSelect.value() : "";
+    //Declare input values
+    var initials = initialsInput.value().trim();
+    var location = locationSelect.value();
 
+    //Style page
     image(gameBackground, 0, 0, width, height);
 
     stroke("black");
     strokeWeight(3);
     fill("yellow");
-    textAlign(CENTER, CENTER);
     text(" Enter your initials \n and location!", width / 2, height / 2 - 100);
 
-    if (initialsInput) initialsInput.show();
-    if (locationSelect) locationSelect.show();
-
+    //Show the input boxes
+    initialsInput.show();
+    locationSelect.show();
     drawGui();
 
-    if (initialsBox && initialsBox.isPressed && initialsInput) {
-      initialsInput.elt.focus();
-    }
+     if (initialsBox.isPressed) {
+    initialsInput.elt.focus(); // manually focus it
+  }
 
-    if (locationBox && locationBox.isPressed && locationSelect) {
-      locationSelect.elt.focus();
-    }
-
-    if (playButton2 && playButton2.isPressed) {
-      if (initials.length >= 3 && location !== "") {
+  if (locationBox.isPressed) {
+    locationSelect.elt.focus();
+  }
+    
+    //Play game when pressed
+    if (playButton2.isPressed) {
+      if (initials.length >= 3 && location != "") {
         localStorage.setItem("gobblerplayerInitials", initials);
         localStorage.setItem("gobblerplayerLocation", location);
 
         currentScreen = "play";
         strokeWeight(1);
-
-        if (initialsInput) initialsInput.hide();
-        if (locationSelect) locationSelect.hide();
-
+        initialsInput.hide();
+        locationSelect.hide();
         playButton2.visible = false;
 
-        try {
-          if (initialsBox) {
-            initialsBox.visible = false;
-            initialsBox.enabled = false;
-          }
-          if (locationBox) {
-            locationBox.visible = false;
-            locationBox.enabled = false;
-          }
-        } catch {}
-
+         try {
+      initialsBox.visible = false;
+      initialsBox.enabled = false
+      locationBox.visible = false;
+      locationBox.enabled = false
+    } catch (err) {}
+        
         dataLoaded = false; // reset for next time
       } else {
         alert("Please enter 3 initials and select a location!");
@@ -420,129 +436,163 @@ function selectScreen() {
   }
 }
 
-// Leaderboard data and logic
 let leaderboard = [];
-let dataLoaded = false;
+let lastGeneratedDate = "";
 
 function updateLeaderboard(initials, location, score) {
-  if (!initials || !location || typeof score !== "number") return;
-
+  // Load the current leaderboard from localStorage
   let storedLeaderboard = JSON.parse(localStorage.getItem("gobblerleaderboard")) || [];
-  leaderboard = storedLeaderboard;
+  leaderboard = storedLeaderboard; // use existing leaderboard
 
+  // Check if player already exists
   let player = leaderboard.find((entry) => entry.initials === initials);
 
   if (player) {
+    // Update score if higher
     if (score > player.score) {
       player.score = score;
       player.location = location;
     }
   } else {
+    // Add new player
     leaderboard.push({ initials, location, score });
   }
 
+  // Sort from highest to lowest score
   leaderboard.sort((a, b) => b.score - a.score);
 
+  // Keep only top 10 entries
   if (leaderboard.length > 10) {
     leaderboard = leaderboard.slice(0, 10);
   }
 
+  // Save updated leaderboard back to localStorage
   localStorage.setItem("gobblerleaderboard", JSON.stringify(leaderboard));
-  localStorage.setItem("gobblerleaderboardDate", new Date().toISOString().split("T")[0]);
 }
 
 function generateDailyLeaderboard() {
+  //Check today's date
+
+  localStorage.removeItem("leaderboard");
+  localStorage.removeItem("leaderboardDate");
+  generateDailyLeaderboard();
+  
+  
+  
   const today = new Date().toISOString().split("T")[0];
   const storedDate = localStorage.getItem("gobblerleaderboardDate");
-
-  // If leaderboard is current, load it and return
+  
   if (storedDate === today && localStorage.getItem("gobblerleaderboard")) {
     leaderboard = JSON.parse(localStorage.getItem("gobblerleaderboard"));
     return;
   }
+  else{
+    localStorage.removeItem("gobblerleaderboard");
+    localStorage.removeItem("gobblerleaderboardDate");
+  }
 
-  // Create fresh dummy leaderboard
+  // Otherwise, make a new random leaderboard
   const sampleInitials = ["AM", "JS", "KT", "LM", "RB", "TD", "CG", "MP", "ZN", "QF"];
   const sampleLocations = [
-    "Canada", "USA", "Japan", "UK", "France", "Germany", "Italy", "Brazil", "India", "Australia"
+    "Canada",
+    "USA",
+    "Japan",
+    "UK",
+    "France",
+    "Germany",
+    "Italy",
+    "Brazil",
+    "India",
+    "Australia"
   ];
 
   leaderboard = [];
-
   for (let i = 0; i < 10; i++) {
     let initials = sampleInitials[Math.floor(Math.random() * sampleInitials.length)];
     let location = sampleLocations[Math.floor(Math.random() * sampleLocations.length)];
-    let score = Math.floor(Math.random() * 1000 + 100); // Random score 100-1100
+    let score = Math.floor(Math.random() * 80 + 5); // random score 100–1100
 
     leaderboard.push({ initials, location, score });
   }
 
+  // Sort leaderboard (highest score first)
   leaderboard.sort((a, b) => b.score - a.score);
 
+  // Save to localStorage with today's date
   localStorage.setItem("gobblerleaderboard", JSON.stringify(leaderboard));
   localStorage.setItem("gobblerleaderboardDate", today);
 }
 
-// Leaderboard screen display
 function leaderboardScreen() {
-  if (currentScreen === "leaderboard") {
-    generateDailyLeaderboard();
+  if (currentScreen == "leaderboard") {
+    // Ensure leaderboard is ready
+    if (leaderboard.length === 0) {
+      generateDailyLeaderboard();
+    }
 
-    stroke('black');
-    strokeWeight(4);
+    stroke('black')
+    strokeWeight(4)
     fill("white");
     image(trophyRoom, 0, 0, width, height);
 
-    if (initialsInput) initialsInput.hide();
-    if (locationSelect) locationSelect.hide();
+    initialsInput.hide();
+    locationSelect.hide();
 
-    if (saveButton) {
-      saveButton.visible = false;
-      saveButton.enabled = false;
-    }
-    if (playButton) {
-      playButton.visible = false;
-      playButton.enabled = false;
-    }
-    if (playButton2) {
-      playButton2.visible = false;
-      playButton2.enabled = false;
-    }
+    // Disable buttons
+    saveButton.visible = false;
+    saveButton.enabled = false;
 
-    push();
+    playButton.visible = false;
+    playButton2.visible = false;
+
+    push()
+    //Draw background squares
     noStroke();
-    fill(0, 0, 0, 180);
-
-    const boxWidth = 320;
-    const boxHeight = 400;
-
-    rect(width / 2 - boxWidth - 50, 60, boxWidth - 50, boxHeight, 20);
-    rect(width / 2 + 110, 60, boxWidth - 50, boxHeight, 20);
-    pop();
-
+    fill(0, 0, 0, 180); // dark transparent squares
+    let boxWidth = 320;
+    let boxHeight = 400;
+    rect(width / 2 - boxWidth - 50, 60, boxWidth - 50, boxHeight, 20); // left box
+    rect(width / 2 + 110, 60, boxWidth - 50, boxHeight, 20); // right box
+    pop()
+    
     drawGui();
 
-    fill("yellow");
+    fill("yellow")
     textAlign(CENTER);
     textSize(28);
     text("🏆 Daily Leaderboard 🏆", width / 2, 40);
     textSize(22);
 
-    fill("white");
-    const leftX = width / 5;
-    const rightX = (width / 5) * 4;
-    const startY = 100;
-    const lineSpacing = 75;
+    fill("white")
+    // Split into two columns
+    const leftX = width / 5;      // left column x position
+    const rightX = (width / 5) * 4; // right column x position
+    const startY = 100;           // top margin
+    const lineSpacing = 75;       // vertical spacing
 
+    // Draw leaderboard
     for (let i = 0; i < leaderboard.length; i++) {
-      const entry = leaderboard[i];
-      const columnX = i < 5 ? leftX : rightX;
-      const rowY = startY + (i % 5) * lineSpacing;
+      let entry = leaderboard[i];
+      let columnX, rowY;
 
-      text(`${i + 1}. ${entry.initials} - ${entry.location}\nScore: ${entry.score}`, columnX, rowY);
+      // First 5 entries on the left, rest on the right
+      if (i < 5) {
+        columnX = leftX;
+        rowY = startY + i * lineSpacing;
+      } else {
+        columnX = rightX;
+        rowY = startY + (i - 5) * lineSpacing;
+      }
+
+      text(
+        `${i + 1}. ${entry.initials} - ${entry.location}\nScore: ${entry.score}`,
+        columnX,
+        rowY
+      );
     }
 
-    if (backButton && backButton.isPressed) {
+    // Back button
+    if (currentScreen == "leaderboard" && backButton.isPressed) {
       currentScreen = "menu";
       createPlayButton(0);
     }
