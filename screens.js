@@ -362,6 +362,7 @@ function drawMenu() {
   leaderboardButton.onPress = function () {
     currentScreen = "leaderboard";
     createPlayButton(2);
+    generateDailyLeaderboard();
   };
 }
 
@@ -524,9 +525,6 @@ function generateDailyLeaderboard() {
 function leaderboardScreen() {
   if (currentScreen == "leaderboard") {
     // Ensure leaderboard is ready
-    if (leaderboard.length === 0) {
-      generateDailyLeaderboard();
-    }
 
     stroke('black')
     strokeWeight(4)
