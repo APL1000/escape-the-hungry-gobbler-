@@ -1,4 +1,4 @@
-// Create buttons according to type
+// Create buttons with consistent style and reuse
 function createPlayButton(button) {
   if (button == 0) {
     if (!playButton) {
@@ -112,7 +112,7 @@ function createPlayButton(button) {
   }
 }
 
-// Winner screen
+// Winner screen display
 function winnerScreen() {
   textAlign(CENTER, CENTER);
   fill(0, 0, 0, 200);
@@ -134,6 +134,7 @@ function winnerScreen() {
     currentScreen = "menu";
     createPlayButton(0);
   }
+
   if (currentScreen == "play" && saveButton && saveButton.isPressed) {
     updateLeaderboard(
       localStorage.getItem("gobblerplayerInitials"),
@@ -144,7 +145,7 @@ function winnerScreen() {
   }
 }
 
-// Loser screen
+// Loser screen display
 function loserScreen() {
   fill(236, 252, 3, 200);
   rect(50, 50, 600, 200);
@@ -168,6 +169,7 @@ function loserScreen() {
     createPlayButton(0);
   }
   drawGui();
+
   if (currentScreen == "play" && saveButton && saveButton.isPressed) {
     updateLeaderboard(
       localStorage.getItem("gobblerplayerInitials"),
@@ -278,7 +280,7 @@ function playScreen() {
   }
 }
 
-// Main menu screen
+// Main menu display and interaction
 function drawMenu() {
   if (currentScreen == "menu") {
     if (initialsInput) initialsInput.hide();
@@ -326,9 +328,9 @@ function drawMenu() {
 
     if (leaderboardButton) {
       leaderboardButton.draw();
-      leaderboardButton.onPress = function () {
+      leaderboardButton.onPress = function() {
         currentScreen = "leaderboard";
-        createPlayButton(2);
+        leaderboardScreen();
       };
     }
 
@@ -345,7 +347,7 @@ function drawMenu() {
   }
 }
 
-// User input screen
+// Player initials and location selection screen
 function selectScreen() {
   if (currentScreen == "select") {
     if (!dataLoaded) {
@@ -418,124 +420,128 @@ function selectScreen() {
   }
 }
 
-let leaderboard = [];
-let dataLoaded = false;
+// Leaderboard data management
 
+// Generate dummy leaderboard and save separately
+function generateDummyLeaderboard() {
+  const dummyDataKey = "dummyGobblerLeaderboard";
+  if (!localStorage.getItem(dummyDataKey)) {
+    const sampleInitials = ["AM", "JS", "KT", "LM", "RB", "TD", "CG", "MP", "ZN", "QF"];
+    const sampleLocations = ["Canada", "USA", "Japan", "UK", "France", "Germany", "Italy", "Brazil", "India", "Australia"];
+    let dummyScores = [];
+    for (let i = 0; i < 10; i++) {
+      dummyScores.push({
+        initials: sampleInitials[Math.floor(Math.random() * sampleInitials.length)],
+        location: sampleLocations[Math.floor(Math.random() * sampleLocations.length)],
+        score: Math.floor(Math.random() * 90) + 5 // dummy times between 5 and 95 sec capped later
+      });
+    }
+    dummyScores = dummyScores.map(d => ({...d, score: Math.min(d.score, 90)}));
+    dummyScores.sort((a,b) => a.score - b.score);
+    localStorage.setItem(dummyDataKey, JSON.stringify(dummyScores));
+  }
+}
+
+// Return merged dummy + real scores sorted ascending, limited to top 10
+function getMergedLeaderboard() {
+  const dummyDataKey = "dummyGobblerLeaderboard";
+  const realDataKey = "gobblerleaderboard";
+
+  let dummyScores = JSON.parse(localStorage.getItem(dummyDataKey)) || [];
+  let realScores = JSON.parse(localStorage.getItem(realDataKey)) || [];
+
+  realScores = realScores.filter(entry => entry.score <= 90);
+
+  let merged = [...dummyScores];
+
+  realScores.forEach(real => {
+    let idx = merged.findIndex(d => d.initials === real.initials);
+    if (idx >= 0) {
+      if (real.score < merged[idx].score) merged[idx] = real;
+    } else {
+      merged.push(real);
+    }
+  });
+
+  merged.sort((a,b) => a.score - b.score);
+
+  return merged.slice(0, 10);
+}
+
+// Save player score updating real leaderboard
 function updateLeaderboard(initials, location, score) {
   if (!initials || !location || typeof score !== "number") return;
+  if (score > 90) score = 90;
 
-  let storedLeaderboard = JSON.parse(localStorage.getItem("gobblerleaderboard")) || [];
-  leaderboard = storedLeaderboard;
+  const realDataKey = "gobblerleaderboard";
+  let realScores = JSON.parse(localStorage.getItem(realDataKey)) || [];
 
-  let player = leaderboard.find((entry) => entry.initials === initials);
+  let existing = realScores.find(e => e.initials === initials);
 
-  if (player) {
-    if (score > player.score) {
-      player.score = score;
-      player.location = location;
-    }
+  if (existing) {
+    if (score < existing.score) existing.score = score;
+    existing.location = location;
   } else {
-    leaderboard.push({ initials, location, score });
+    realScores.push({initials, location, score});
   }
 
-  leaderboard.sort((a, b) => b.score - a.score);
+  realScores = realScores.filter(e => e.score <= 90);
+  realScores.sort((a,b) => a.score - b.score);
 
-  if (leaderboard.length > 10) {
-    leaderboard = leaderboard.slice(0, 10);
-  }
+  if (realScores.length > 10) realScores = realScores.slice(0,10);
 
-  localStorage.setItem("gobblerleaderboard", JSON.stringify(leaderboard));
-  localStorage.setItem("gobblerleaderboardDate", new Date().toISOString().split("T")[0]);
+  localStorage.setItem(realDataKey, JSON.stringify(realScores));
 }
 
-function generateDailyLeaderboard() {
-  const today = new Date().toISOString().split("T")[0];
-  const storedDate = localStorage.getItem("gobblerleaderboardDate");
-
-  if (storedDate === today && localStorage.getItem("gobblerleaderboard")) {
-    leaderboard = JSON.parse(localStorage.getItem("gobblerleaderboard"));
-    return;
-  }
-
-  leaderboard = [];
-
-  const sampleInitials = ["AM", "JS", "KT", "LM", "RB", "TD", "CG", "MP", "ZN", "QF"];
-  const sampleLocations = [
-    "Canada", "USA", "Japan", "UK", "France", "Germany", "Italy", "Brazil", "India", "Australia"
-  ];
-
-  for (let i = 0; i < 10; i++) {
-    let initials = sampleInitials[Math.floor(Math.random() * sampleInitials.length)];
-    let location = sampleLocations[Math.floor(Math.random() * sampleLocations.length)];
-    let score = Math.floor(Math.random() * 1000 + 100);
-    leaderboard.push({ initials, location, score });
-  }
-
-  leaderboard.sort((a, b) => b.score - a.score);
-
-  localStorage.setItem("gobblerleaderboard", JSON.stringify(leaderboard));
-  localStorage.setItem("gobblerleaderboardDate", today);
-}
-
+// Leaderboard display screen combining dummy and player scores
 function leaderboardScreen() {
-  if (currentScreen == "leaderboard") {
-    generateDailyLeaderboard();
+  if (currentScreen !== "leaderboard") return;
 
-    stroke('black');
-    strokeWeight(4);
-    fill("white");
-    image(trophyRoom, 0, 0, width, height);
+  generateDummyLeaderboard();
 
-    if (initialsInput) initialsInput.hide();
-    if (locationSelect) locationSelect.hide();
+  let leaderboard = getMergedLeaderboard();
 
-    if (saveButton) {
-      saveButton.visible = false;
-      saveButton.enabled = false;
-    }
-    if (playButton) {
-      playButton.visible = false;
-      playButton.enabled = false;
-    }
-    if (playButton2) {
-      playButton2.visible = false;
-      playButton2.enabled = false;
-    }
+  stroke('black');
+  strokeWeight(4);
+  fill("white");
+  image(trophyRoom, 0, 0, width, height);
 
-    push();
-    noStroke();
-    fill(0, 0, 0, 180);
-    let boxWidth = 320;
-    let boxHeight = 400;
-    rect(width / 2 - boxWidth - 50, 60, boxWidth - 50, boxHeight, 20);
-    rect(width / 2 + 110, 60, boxWidth - 50, boxHeight, 20);
-    pop();
+  if (initialsInput) initialsInput.hide();
+  if (locationSelect) locationSelect.hide();
+  if (saveButton) { saveButton.visible = false; saveButton.enabled = false; }
+  if (playButton) { playButton.visible = false; playButton.enabled = false; }
+  if (playButton2) { playButton2.visible = false; playButton2.enabled = false; }
 
-    drawGui();
+  push();
+  noStroke();
+  fill(0, 0, 0, 180);
+  rect(width / 2 - 370, 60, 320, 400, 20);
+  rect(width / 2 + 110, 60, 320, 400, 20);
+  pop();
 
-    fill("yellow");
-    textAlign(CENTER);
-    textSize(28);
-    text("🏆 Daily Leaderboard 🏆", width / 2, 40);
-    textSize(22);
+  drawGui();
 
-    fill("white");
-    const leftX = width / 5;
-    const rightX = (width / 5) * 4;
-    const startY = 100;
-    const lineSpacing = 75;
+  fill("yellow");
+  textAlign(CENTER);
+  textSize(28);
+  text("🏆 Daily Leaderboard 🏆", width / 2, 40);
+  textSize(22);
 
-    for (let i = 0; i < leaderboard.length; i++) {
-      const entry = leaderboard[i];
-      const columnX = i < 5 ? leftX : rightX;
-      const rowY = startY + (i % 5) * lineSpacing;
+  fill("white");
+  const leftX = width / 5;
+  const rightX = (width / 5) * 4;
+  const startY = 100;
+  const lineSpacing = 75;
 
-      text(`${i + 1}. ${entry.initials} - ${entry.location}\nScore: ${entry.score}`, columnX, rowY);
-    }
+  for (let i = 0; i < leaderboard.length; i++) {
+    const entry = leaderboard[i];
+    const colX = i < 5 ? leftX : rightX;
+    const rowY = startY + (i % 5) * lineSpacing;
+    text(`${i + 1}. ${entry.initials} - ${entry.location}\nScore: ${entry.score}s`, colX, rowY);
+  }
 
-    if (backButton && backButton.isPressed) {
-      currentScreen = "menu";
-      createPlayButton(0);
-    }
+  if (backButton && backButton.isPressed) {
+    currentScreen = "menu";
+    createPlayButton(0);
   }
 }
