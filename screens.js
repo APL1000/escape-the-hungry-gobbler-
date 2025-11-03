@@ -362,6 +362,7 @@ function drawMenu() {
   leaderboardButton.onPress = function () {
     currentScreen = "leaderboard";
     createPlayButton(2);
+    generateDailyLeaderboard();
   };
 }
 
@@ -473,10 +474,8 @@ function updateLeaderboard(initials, location, score) {
 function generateDailyLeaderboard() {
   //Check today's date
 
-  localStorage.removeItem("leaderboard");
-  localStorage.removeItem("leaderboardDate");
-  generateDailyLeaderboard();
-  
+  localStorage.removeItem("gobblerleaderboard");
+  localStorage.removeItem("gobblerleaderboardDate");
   
   
   const today = new Date().toISOString().split("T")[0];
@@ -526,9 +525,6 @@ function generateDailyLeaderboard() {
 function leaderboardScreen() {
   if (currentScreen == "leaderboard") {
     // Ensure leaderboard is ready
-    if (leaderboard.length === 0) {
-      generateDailyLeaderboard();
-    }
 
     stroke('black')
     strokeWeight(4)
