@@ -189,6 +189,7 @@ function loserScreen() {
   }
   drawGui();
   if (currentScreen == "play" && saveButton.isPressed) {
+    generateDailyLeaderboard();
     updateLeaderboard(
       localStorage.getItem("gobblerplayerInitials"),
       localStorage.getItem("gobblerplayerLocation"),
@@ -562,7 +563,7 @@ function leaderboardScreen() {
     fill("yellow");
     textAlign(CENTER);
     textSize(20);
-    text("🏆 Daily Leaderboard 🏆", width / 2, 40);
+    text("🏆 Daily Leaderboard! 🏆", width / 2, 40);
     textSize(22);
 
     fill("white");
