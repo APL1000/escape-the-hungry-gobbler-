@@ -514,7 +514,7 @@ function generateDailyLeaderboard() {
       sampleInitials[Math.floor(Math.random() * sampleInitials.length)];
     let location =
       sampleLocations[Math.floor(Math.random() * sampleLocations.length)];
-    let score = Math.floor(Math.random() * 54 + 5); // random score 100–1100
+    let score = Math.floor(Math.random() * 84 + 5); // random score 5–89
 
     leaderboard.push({ initials, location, score });
   }
@@ -570,7 +570,7 @@ function leaderboardScreen() {
     const leftX = width / 5; // left column x position
     const rightX = (width / 5) * 4; // right column x position
     const startY = 100; // top margin
-    const lineSpacing = 60; // vertical spacing
+    const lineSpacing = 75; // vertical spacing
 
     // Draw leaderboard
     for (let i = 0; i < leaderboard.length; i++) {
