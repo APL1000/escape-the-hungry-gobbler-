@@ -154,6 +154,7 @@ function winnerScreen() {
     createPlayButton(0);
   }
   if (currentScreen == "play" && saveButton.isPressed) {
+    generateDailyLeaderboard();
     updateLeaderboard(
       localStorage.getItem("gobblerplayerInitials"),
       localStorage.getItem("gobblerplayerLocation"),
